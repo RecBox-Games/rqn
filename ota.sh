@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# not part of updating, just to set hostname for old boxes
+if [[ "$(hostname)" != "recboxgamenite" && "$(hostname)" != "recboxbuilder" ]]; then
+    sudo hostname recboxgamenite
+    sudo echo recboxgamenite > /etc/hostname
+    sudo sed -i 's/debian/recboxgamenite/g'
+fi
+
+
 base="/home/requin"
 
 branch="production"
