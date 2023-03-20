@@ -1,19 +1,16 @@
 #!/bin/bash
 
-
-
 base="/home/requin"
 
-branch="production"
+branch="main"
 
-if [[ -f "$base/testing" ]]; then
-    branch="testing"
+if [[ -f "$base/branch" ]]; then
+    branch=$(cat $base/branch)
 fi
 
-if [[ -f "$base/development" ]]; then
-    branch="development"
-fi
-
-git pull origin $branch
+cd $base/rqn
+git fetch
 git checkout $branch
+git pull origin $branch
 
+cp $base/rqn/.xinitrc $base/
