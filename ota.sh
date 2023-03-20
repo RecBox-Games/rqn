@@ -28,4 +28,4 @@ git fetch
 git checkout $branch
 git pull origin $branch
 
-sudo cp $base/rqn/.xinitrc $base/
+sudo cp -p $base/rqn/.xinitrc $base/
