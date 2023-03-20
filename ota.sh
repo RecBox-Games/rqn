@@ -1,5 +1,12 @@
 #!/bin/bash
 
+
+# not part of updating, just npm install if we need to
+if [[ ! -d "/home/requin/rqn/webcp/node_modules" ]]; then
+    cd /home/requin/rqn/webcp
+    npm install
+fi
+
 # not part of updating, just to set hostname for old boxes
 if [[ "$(hostname)" != "recboxgamenite" && "$(hostname)" != "recboxbuilder" ]]; then
     sudo hostname recboxgamenite
