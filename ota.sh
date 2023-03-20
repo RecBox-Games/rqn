@@ -2,7 +2,7 @@
 
 base="/home/requin"
 
-branch="main"
+branch="production"
 
 if [[ -f "$base/branch" ]]; then
     branch=$(cat $base/branch)
