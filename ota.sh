@@ -10,8 +10,8 @@ fi
 # not part of updating, just to set hostname for old boxes
 if [[ "$(hostname)" != "recboxgamenite" && "$(hostname)" != "recboxbuilder" ]]; then
     sudo hostname recboxgamenite
-    sudo echo recboxgamenite > /etc/hostname
-    sudo sed -i 's/debian/recboxgamenite/g'
+    sudo $(echo recboxgamenite > /etc/hostname)
+    sudo sed -i 's/debian/recboxgamenite/g' /etc/hosts
 fi
 
 
