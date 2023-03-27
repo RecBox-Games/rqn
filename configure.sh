@@ -3,8 +3,6 @@
 base="/home/requin"
 rqn="$base/rqn"
 
-export GOOGLE_APPLICATION_CREDENTIALS="$rqn/public_access.json"
-
 # npm install if we need to
 if [[ ! -d "$rqn/webcp/node_modules" ]]; then
     cd /home/requin/rqn/webcp
