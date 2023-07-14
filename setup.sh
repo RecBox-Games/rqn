@@ -4,6 +4,9 @@ set -e
 
 base="/home/requin"
 dest="$base/rqn"
+script=$(readlink -f "$0")
+# Absolute path this script is in
+abs_path=$(dirname "$script")
 
 # lost permissions
 chmod +x $dest/cp_server
@@ -67,6 +70,9 @@ cp $dest/override.conf /etc/systemd/system/getty@tty1.service.d/
 systemctl enable getty@tty1.service
 cp $dest/.xinitrc $base/
 cp $dest/.bashrc $base/
+# setup boot splash screen
+
+source  $abs_path/splash_setup.sh
 
 # done with setup
 echo "Done."
