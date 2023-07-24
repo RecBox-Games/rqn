@@ -70,7 +70,7 @@ function screenChange() {
     // size_tutorial();
     // size_main();
     // size_end();
-    // console.log(context.dimensions)
+    console.log(context.dimensions);
     // onFlip(window.innerWidth, window.innerHeight);
 }
 window.addEventListener("resize", (event) => {
