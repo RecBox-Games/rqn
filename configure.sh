@@ -16,3 +16,9 @@ if [[ ! -f "$base/no_hostname" && "$(hostname)" != "recboxgamenite" && "$(hostna
     sudo sed -i 's/debian/recboxgamenite/g' /etc/hosts
 fi
 
+# configure ssh daemon if it isn't configured already
+if ! command -v sshpass >/dev/null; then
+    sudo apt install -y openssh-server sshpass
+    sudo systemctl stop ssh
+    sudo systemctl mask ssh
+fi
