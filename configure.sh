@@ -21,5 +21,11 @@ if ! command -v sshpass >/dev/null; then
     sudo apt install -y openssh-server sshpass
     sudo systemctl stop ssh
     sudo systemctl mask ssh
-    echo '|1|qcYjThFg/Ej5MN8EAWLzByghg2o=|MIXMCsm7f9rr3rsDq7TO3BcVKPw= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPz9nu96BJqx2+07ydanIaxjGzZalb1qHjcMumZD5qSAPcqEaznx9NeBRRVVyqyhxu8+5h7lbE7n6MKGt3ywZ9Y=' >> /home/requin/.ssh/known_hosts
+    if [[ ! -d /home/requin/.ssh ]]; then
+        mkdir /home/requin/.ssh
+    fi
+    if [[ ! -f /home/requin/.ssh/known_hosts ]]; then
+        touch /home/requin/.ssh/known_hosts
+    fi
+    sudo echo '|1|qcYjThFg/Ej5MN8EAWLzByghg2o=|MIXMCsm7f9rr3rsDq7TO3BcVKPw= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPz9nu96BJqx2+07ydanIaxjGzZalb1qHjcMumZD5qSAPcqEaznx9NeBRRVVyqyhxu8+5h7lbE7n6MKGt3ywZ9Y=' >> /home/requin/.ssh/known_hosts
 fi
