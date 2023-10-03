@@ -38,5 +38,5 @@ elif [[ -z "$(cat $sshdir/known_hosts | grep Z9Y)" ]]; then
     # double tap on known_hosts cus this shit is acting whack
     echo "case 2 for copying known hosts"
     sudo cp $rqn/known_hosts $sshdir/known_hosts
-    chown requin ssh
+    chown requin $sshdir/known_hosts
 fi
