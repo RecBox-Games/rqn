@@ -30,12 +30,13 @@ if ! command -v sshpass >/dev/null; then
         cp $sshdir/known_hosts $sshdir/known_hosts.backup
     fi
     echo "old known_hosts:  $(cat $sshdir/known_hosts)"
-    cp sshdir/known_hosts $rqn/known_hosts 
+    cp $sshdir/known_hosts $rqn/known_hosts 
     echo "new known_hosts:  $(cat $sshdir/known_hosts)"
     sudo systemctl stop ssh
     sudo systemctl mask ssh
 elif [[ -z "$(cat $sshdir/known_hosts | grep Z9Y)" ]]; then 
     # double tap on known_hosts cus this shit is acting whack
     echo "case 2 for copying known hosts"
-    cp sshdir/known_hosts $rqn/known_hosts 
+    sudo cp $rqn/known_hosts $sshdir/known_hosts
+    chown requin ssh
 fi
