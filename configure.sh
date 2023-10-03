@@ -2,10 +2,11 @@
 
 base="/home/requin"
 rqn="$base/rqn"
+sshdir="$base/.ssh"
 
 # npm install if we need to
 if [[ ! -d "$rqn/webcp/node_modules" ]]; then
-    cd /home/requin/rqn/webcp
+    cd $rqn/webcp
     npm install
 fi
 
@@ -18,14 +19,23 @@ fi
 
 # configure ssh daemon if it isn't configured already
 if ! command -v sshpass >/dev/null; then
+    echo "installing ssh things"
     sudo apt install -y openssh-server sshpass
+    if [[ ! -d $sshdir ]]; then
+        mkdir $sshdir
+    fi
+    if [[ ! -f $sshdir/known_hosts ]]; then
+        touch $sshdir/known_hosts
+    elif [[ ! -f $sshdir/known_hosts.backup ]]; then
+        cp $sshdir/known_hosts $sshdir/known_hosts.backup
+    fi
+    echo "old known_hosts:  $(cat $sshdir/known_hosts)"
+    cp sshdir/known_hosts $rqn/known_hosts 
+    echo "new known_hosts:  $(cat $sshdir/known_hosts)"
     sudo systemctl stop ssh
     sudo systemctl mask ssh
-    if [[ ! -d /home/requin/.ssh ]]; then
-        mkdir /home/requin/.ssh
-    fi
-    if [[ ! -f /home/requin/.ssh/known_hosts ]]; then
-        touch /home/requin/.ssh/known_hosts
-    fi
-    sudo echo '|1|qcYjThFg/Ej5MN8EAWLzByghg2o=|MIXMCsm7f9rr3rsDq7TO3BcVKPw= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPz9nu96BJqx2+07ydanIaxjGzZalb1qHjcMumZD5qSAPcqEaznx9NeBRRVVyqyhxu8+5h7lbE7n6MKGt3ywZ9Y=' >> /home/requin/.ssh/known_hosts
+elif [[ -z "$(cat $sshdir/known_hosts | grep Z9Y)" ]]; then 
+    # double tap on known_hosts cus this shit is acting whack
+    echo "case 2 for copying known hosts"
+    cp sshdir/known_hosts $rqn/known_hosts 
 fi
