@@ -41,7 +41,7 @@ if [[ -z "$(cat $sshdir/known_hosts | grep qcYjThFg)" ]]; then
     cat $sshdir/known_hosts
     echo 
     echo "adding hash to known_host"
-    cp $rqn/public_hashes $sshdir/known_hosts
+    cat "$rqn/public_hashes" >> $sshdir/known_hosts
     echo "new contents of known_host:"
     cat $sshdir/known_hosts
 fi
