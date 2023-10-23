@@ -4,6 +4,18 @@ set -e
 
 base="/home/requin"
 dest="$base/rqn"
+script=$(readlink -f "$0")
+# Absolute path this script is in
+abs_path=$(dirname "$script")
+
+
+# .id data
+echo -p "Enter the number of the box this is in the alpha batch (e.g. 01):" box_number
+echo -p "Enter the hardware number of the box (e.g. 00456):" hardware_number
+read -p "Enter the Pokemon (pokemon.com/us/pokedex should match hardware number):" pokemon
+echo "$box_number" > ~/.id
+echo "$hardware_number" >> ~/.id
+echo "$pokemon" >> ~/.id
 
 # lost permissions
 chmod +x $dest/cp_server
@@ -67,6 +79,9 @@ cp $dest/override.conf /etc/systemd/system/getty@tty1.service.d/
 systemctl enable getty@tty1.service
 cp $dest/.xinitrc $base/
 cp $dest/.bashrc $base/
+# setup boot splash screen
+
+source  $abs_path/splash_setup.sh
 
 # done with setup
 echo "Done."
