@@ -10,12 +10,12 @@ abs_path=$(dirname "$script")
 
 
 # .id data
-echo -p "Enter the number of the box this is in the alpha batch (e.g. 01):" box_number
-echo -p "Enter the hardware number of the box (e.g. 00456):" hardware_number
+read -p "Enter the number of the box this is in the alpha batch (e.g. 01):" box_number
+read -p "Enter the hardware number of the box (e.g. 00456):" hardware_number
 read -p "Enter the Pokemon (pokemon.com/us/pokedex should match hardware number):" pokemon
-echo "$box_number" > ~/.id
-echo "$hardware_number" >> ~/.id
-echo "$pokemon" >> ~/.id
+echo -e "$box_number\n" > $base/.id
+echo -e "$hardware_number\n" >> $base/.id
+echo -e "$pokemon\n" >> $base/.id
 
 # lost permissions
 chmod +x $dest/cp_server

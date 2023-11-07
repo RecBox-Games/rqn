@@ -1,7 +1,7 @@
 # Must be ran as root
 
 echo "installing plymouth ..."
-sudo apt-get install plymouth plymouth-themes
+sudo apt-get install -y plymouth plymouth-themes
 
 cp $abs_path/grub /etc/default/grub
 tar -xf $abs_path/GameNiteSplash.tar -C $abs_path
