@@ -10,8 +10,8 @@ export const drawablesPrint = () => {
 export const drawablesRenderAll = () => {
     let ctx = get_context();
     // printDrawables();
-    // ctx.ctx.fillStyle = "#808080";
-    // ctx.ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.ctx.fillStyle = "#607060";
+    ctx.ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     for (let item of Idrawables) {
         drawableRenderSingle(ctx, item);
     }
