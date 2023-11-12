@@ -31,13 +31,13 @@ export const start_default_controller = () => {
     enter.addEventListener('load', () => { console.log('Loaded enter'); });
     exit.addEventListener('load', () => { console.log('Loaded exit'); });
     empty.addEventListener('load', () => { console.log('Loaded empty'); });
-    up.src = 'resources/up.svg';
-    down.src = 'resources/down.svg';
-    left.src = 'resources/left.svg';
-    right.src = 'resources/right.svg';
-    enter.src = 'resources/enter.svg';
-    exit.src = 'resources/exit.svg';
-    empty.src = 'resources/empty.svg';
+    up.src = 'resources/up.png';
+    down.src = 'resources/down.png';
+    left.src = 'resources/left.png';
+    right.src = 'resources/right.png';
+    enter.src = 'resources/enter.png';
+    exit.src = 'resources/exit.png';
+    empty.src = 'resources/empty.png';
     controller = {
         up: { ...new_drawable_img(), dst: new_rect(), image: up, },
         down: { ...new_drawable_img(), dst: new_rect(), image: down, },
@@ -79,49 +79,49 @@ const size_arrows = (pad) => {
     if (controller.up.dst) {
         controller.up.dst.w = controller.empty.dst.w;
         controller.up.dst.h = controller.empty.dst.h;
-        controller.up.dst.x = controller.empty.dst.x + 5;
-        controller.up.dst.y = controller.empty.dst.y - controller.empty.dst.h * 0.8 - pad;
+        controller.up.dst.x = controller.empty.dst.x;
+        controller.up.dst.y = controller.empty.dst.y - controller.empty.dst.h * 0.9 - pad;
     }
     if (controller.down.dst) {
         controller.down.dst.w = controller.empty.dst.w;
         controller.down.dst.h = controller.empty.dst.h;
-        controller.down.dst.x = controller.empty.dst.x - 5;
-        controller.down.dst.y = controller.empty.dst.y + controller.empty.dst.h * 0.8 + pad;
+        controller.down.dst.x = controller.empty.dst.x;
+        controller.down.dst.y = controller.empty.dst.y + controller.empty.dst.h * 0.9 + pad;
     }
     if (controller.left.dst) {
         controller.left.dst.w = controller.empty.dst.w;
         controller.left.dst.h = controller.empty.dst.h;
-        controller.left.dst.x = controller.empty.dst.x - controller.empty.dst.w * 0.8 - pad;
+        controller.left.dst.x = controller.empty.dst.x - controller.empty.dst.w * 0.9 - pad;
         controller.left.dst.y = controller.empty.dst.y;
     }
     if (controller.right.dst) {
         controller.right.dst.w = controller.empty.dst.w;
         controller.right.dst.h = controller.empty.dst.h;
-        controller.right.dst.x = controller.empty.dst.x + controller.empty.dst.w * 0.8 + pad;
+        controller.right.dst.x = controller.empty.dst.x + controller.empty.dst.w * 0.9 + pad;
         controller.right.dst.y = controller.empty.dst.y;
     }
 };
-const size_enter_exit = (empty_origin, exit_origin) => {
+const size_enter_exit = (empty_origin, enter_origin) => {
     const dims = { x: window.innerWidth, y: window.innerHeight };
     if (controller.empty.dst) {
         controller.empty.dst.x = empty_origin.x;
         controller.empty.dst.y = empty_origin.y;
     }
     if (controller.enter.dst) {
-        controller.enter.dst.x = exit_origin.x;
-        controller.enter.dst.y = exit_origin.y;
+        controller.enter.dst.x = enter_origin.x;
+        controller.enter.dst.y = enter_origin.y;
     }
     if (controller.exit.dst) {
-        controller.exit.dst.x = exit_origin.x - dims.x * 0.20;
-        controller.exit.dst.y = exit_origin.y + dims.y * 0.20;
+        controller.exit.dst.x = enter_origin.x - dims.x * 0.20;
+        controller.exit.dst.y = enter_origin.y + dims.y * 0.20;
     }
 };
 const size_landscape = () => {
     const dims = { x: window.innerWidth, y: window.innerHeight };
     const pad = 15;
-    const empty_origin = { x: dims.x * 0.15, y: dims.y * 0.5 - dims.y * 0.125 };
-    const exit_origin = { x: dims.x - dims.x * 0.25, y: dims.y * 0.5 - dims.y * 0.25 };
-    size_enter_exit(empty_origin, exit_origin);
+    const empty_origin = { x: dims.x * 0.18, y: dims.y * 0.5 - dims.y * 0.125 };
+    const enter_origin = { x: dims.x - dims.x * 0.25, y: dims.y * 0.5 - dims.y * 0.25 };
+    size_enter_exit(empty_origin, enter_origin);
     if (controller.enter.dst) {
         controller.enter.dst.w = dims.y * 0.35;
         controller.enter.dst.h = dims.y * 0.35;
@@ -140,20 +140,20 @@ const size_portrait = () => {
     const dims = { x: window.innerWidth, y: window.innerHeight };
     const pad = 25;
     const empty_origin = { y: dims.y * 0.20, x: dims.x * 0.5 - dims.x * 0.125 };
-    const exit_origin = { y: dims.y - dims.y * 0.40, x: dims.x * 0.5 - dims.x * 0.15 };
-    if (controller.exit.dst) {
-        controller.exit.dst.w = dims.x * 0.35;
-        controller.exit.dst.h = dims.x * 0.35;
-    }
+    const enter_origin = { y: dims.y - dims.y * 0.40, x: dims.x * 0.6 - dims.x * 0.15 };
     if (controller.enter.dst) {
-        controller.enter.dst.w = dims.x * 0.29;
-        controller.enter.dst.h = dims.x * 0.29;
+        controller.enter.dst.w = dims.x * 0.35;
+        controller.enter.dst.h = dims.x * 0.35;
+    }
+    if (controller.exit.dst) {
+        controller.exit.dst.w = dims.x * 0.29;
+        controller.exit.dst.h = dims.x * 0.29;
     }
     if (controller.empty.dst) {
         controller.empty.dst.w = dims.x * 0.29;
         controller.empty.dst.h = dims.x * 0.29;
     }
-    size_enter_exit(empty_origin, exit_origin);
+    size_enter_exit(empty_origin, enter_origin);
     size_arrows(pad);
 };
 export const size_controller = () => {
