@@ -122,13 +122,13 @@ const size_landscape = () => {
     const empty_origin = { x: dims.x * 0.15, y: dims.y * 0.5 - dims.y * 0.125 };
     const exit_origin = { x: dims.x - dims.x * 0.25, y: dims.y * 0.5 - dims.y * 0.25 };
     size_enter_exit(empty_origin, exit_origin);
-    if (controller.exit.dst) {
-        controller.exit.dst.w = dims.y * 0.35;
-        controller.exit.dst.h = dims.y * 0.35;
-    }
     if (controller.enter.dst) {
-        controller.enter.dst.w = dims.y * 0.29;
-        controller.enter.dst.h = dims.y * 0.29;
+        controller.enter.dst.w = dims.y * 0.35;
+        controller.enter.dst.h = dims.y * 0.35;
+    }
+    if (controller.exit.dst) {
+        controller.exit.dst.w = dims.y * 0.29;
+        controller.exit.dst.h = dims.y * 0.29;
     }
     if (controller.empty.dst) {
         controller.empty.dst.w = dims.y * 0.29;
