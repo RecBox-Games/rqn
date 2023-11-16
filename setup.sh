@@ -8,6 +8,15 @@ script=$(readlink -f "$0")
 # Absolute path this script is in
 abs_path=$(dirname "$script")
 
+
+# .id data
+read -p "Enter the number of the box this is in the alpha batch (e.g. 01):" box_number
+read -p "Enter the hardware number of the box (e.g. 00456):" hardware_number
+read -p "Enter the Pokemon (pokemon.com/us/pokedex should match hardware number):" pokemon
+echo -e "$box_number\n" > $base/.id
+echo -e "$hardware_number\n" >> $base/.id
+echo -e "$pokemon\n" >> $base/.id
+
 # lost permissions
 chmod +x $dest/cp_server
 chmod +x $dest/configure.sh
