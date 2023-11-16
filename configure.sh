@@ -45,3 +45,19 @@ if [[ -z "$(cat $sshdir/known_hosts | grep qcYjThFg)" ]]; then
     echo "new contents of known_host:"
     cat $sshdir/known_hosts
 fi
+
+# install apt-pacakges required for commands
+QRENCODE="qrencode"
+
+# Check if the package is installed
+dpkg -l | grep -qw $QRENCODE
+
+# Check the exit status of the previous command
+# If the package is not installed, the exit status will be non-zero
+if [ $? -ne 0 ]; then
+    echo "Package $PACKAGE_NAME is not installed. Installing now."
+    sudo apt-get update
+    sudo apt-get install -y $QRENCODE
+else
+    echo "Package $PACKAGE_NAME is already installed."
+fi

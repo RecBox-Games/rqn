@@ -69,7 +69,7 @@ export const init_context = () => {
 };
 // wait for websocket to connect
 window.onresize = screenChange;
-window.onorientationchange = screenChange;
+window.onorientationchange = location.reload.bind(location);
 function screenChange() {
     // context.canvas.width = Math.max(window.innerWidth, window.innerHeight);
     // context.canvas.height = Math.min(window.innerWidth, window.innerHeight);
