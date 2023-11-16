@@ -75,86 +75,83 @@ export const start_default_controller = () => {
         size_controller();
     });
 };
-const size_arrows = (pad) => {
-    if (controller.up.dst) {
-        controller.up.dst.w = controller.empty.dst.w;
-        controller.up.dst.h = controller.empty.dst.h;
-        controller.up.dst.x = controller.empty.dst.x;
-        controller.up.dst.y = controller.empty.dst.y - controller.empty.dst.h * 0.9 - pad;
-    }
-    if (controller.down.dst) {
-        controller.down.dst.w = controller.empty.dst.w;
-        controller.down.dst.h = controller.empty.dst.h;
-        controller.down.dst.x = controller.empty.dst.x;
-        controller.down.dst.y = controller.empty.dst.y + controller.empty.dst.h * 0.9 + pad;
-    }
-    if (controller.left.dst) {
-        controller.left.dst.w = controller.empty.dst.w;
-        controller.left.dst.h = controller.empty.dst.h;
-        controller.left.dst.x = controller.empty.dst.x - controller.empty.dst.w * 0.9 - pad;
-        controller.left.dst.y = controller.empty.dst.y;
-    }
-    if (controller.right.dst) {
-        controller.right.dst.w = controller.empty.dst.w;
-        controller.right.dst.h = controller.empty.dst.h;
-        controller.right.dst.x = controller.empty.dst.x + controller.empty.dst.w * 0.9 + pad;
-        controller.right.dst.y = controller.empty.dst.y;
-    }
-};
-const size_enter_exit = (empty_origin, enter_origin) => {
-    const dims = { x: window.innerWidth, y: window.innerHeight };
-    if (controller.empty.dst) {
-        controller.empty.dst.x = empty_origin.x;
-        controller.empty.dst.y = empty_origin.y;
-    }
-    if (controller.enter.dst) {
-        controller.enter.dst.x = enter_origin.x;
-        controller.enter.dst.y = enter_origin.y;
-    }
-    if (controller.exit.dst) {
-        controller.exit.dst.x = enter_origin.x - dims.x * 0.20;
-        controller.exit.dst.y = enter_origin.y + dims.y * 0.20;
+const size_arrows = (center_x, center_y, smaller_screen_dimension) => {
+    var scd = smaller_screen_dimension;
+    var btn_w = .28;
+    var pad = scd * .02;
+    if (controller.up.dst && controller.down.dst && controller.left.dst && controller.right.dst) {
+        // up
+        controller.up.dst.w = scd * btn_w;
+        controller.up.dst.h = scd * btn_w;
+        controller.up.dst.x = center_x - controller.up.dst.w * .5;
+        controller.up.dst.y = center_y - controller.up.dst.h * 1.5 - pad;
+        // down
+        controller.down.dst.w = scd * btn_w;
+        controller.down.dst.h = scd * btn_w;
+        controller.down.dst.x = center_x - controller.down.dst.w * .5;
+        controller.down.dst.y = center_y + controller.down.dst.h * .5 + pad;
+        // left
+        controller.left.dst.w = scd * btn_w;
+        controller.left.dst.h = scd * btn_w;
+        controller.left.dst.x = center_x - controller.left.dst.w * 1.5 - pad;
+        controller.left.dst.y = center_y - controller.left.dst.h * .5;
+        // right
+        controller.right.dst.w = scd * btn_w;
+        controller.right.dst.h = scd * btn_w;
+        controller.right.dst.x = center_x + controller.right.dst.w * .5 + pad;
+        controller.right.dst.y = center_y - controller.right.dst.h * .5;
     }
 };
 const size_landscape = () => {
     const dims = { x: window.innerWidth, y: window.innerHeight };
-    const pad = 15;
-    const empty_origin = { x: dims.x * 0.18, y: dims.y * 0.5 - dims.y * 0.125 };
-    const enter_origin = { x: dims.x - dims.x * 0.25, y: dims.y * 0.5 - dims.y * 0.25 };
-    size_enter_exit(empty_origin, enter_origin);
-    if (controller.enter.dst) {
-        controller.enter.dst.w = dims.y * 0.35;
-        controller.enter.dst.h = dims.y * 0.35;
+    const center_y = dims.y * .5;
+    const center_x = center_y;
+    const enter_w = (dims.y + dims.x * 2) / 3 * .2;
+    const exit_w = (dims.y + dims.x * 2) / 3 * .15;
+    const empty_w = dims.y * .32;
+    if (controller.empty.dst && controller.exit.dst && controller.enter.dst) {
+        // enter
+        controller.enter.dst.w = enter_w;
+        controller.enter.dst.h = enter_w;
+        controller.enter.dst.x = dims.x - enter_w * 1.3;
+        controller.enter.dst.y = center_y - enter_w * .7;
+        // exit
+        controller.exit.dst.w = exit_w;
+        controller.exit.dst.h = exit_w;
+        controller.exit.dst.x = dims.x - enter_w * 1.6 - exit_w;
+        controller.exit.dst.y = center_y - exit_w * .1;
+        // empty
+        controller.empty.dst.w = empty_w;
+        controller.empty.dst.h = empty_w;
+        controller.empty.dst.x = center_x - empty_w * .5;
+        controller.empty.dst.y = center_y - empty_w * .5;
     }
-    if (controller.exit.dst) {
-        controller.exit.dst.w = dims.y * 0.29;
-        controller.exit.dst.h = dims.y * 0.29;
-    }
-    if (controller.empty.dst) {
-        controller.empty.dst.w = dims.y * 0.29;
-        controller.empty.dst.h = dims.y * 0.29;
-    }
-    size_arrows(pad);
+    size_arrows(center_x, center_y, dims.y);
 };
 const size_portrait = () => {
     const dims = { x: window.innerWidth, y: window.innerHeight };
-    const pad = 25;
-    const empty_origin = { y: dims.y * 0.20, x: dims.x * 0.5 - dims.x * 0.125 };
-    const enter_origin = { y: dims.y - dims.y * 0.40, x: dims.x * 0.6 - dims.x * 0.15 };
-    if (controller.enter.dst) {
-        controller.enter.dst.w = dims.x * 0.35;
-        controller.enter.dst.h = dims.x * 0.35;
+    const center_x = dims.x * .5;
+    const center_y = dims.y * .5;
+    const enter_w = dims.x * .3;
+    const exit_w = dims.x * .25;
+    if (controller.empty.dst && controller.exit.dst && controller.enter.dst) {
+        // enter
+        controller.enter.dst.w = enter_w;
+        controller.enter.dst.h = enter_w;
+        controller.enter.dst.x = center_x - enter_w * .5;
+        controller.enter.dst.y = center_y - enter_w * .5;
+        // exit
+        controller.exit.dst.x = dims.x * .05;
+        controller.exit.dst.y = dims.x * .05;
+        controller.exit.dst.w = exit_w;
+        controller.exit.dst.h = exit_w;
+        // empty
+        controller.empty.dst.w = enter_w;
+        controller.empty.dst.h = enter_w;
+        controller.empty.dst.x = center_x - enter_w * .5;
+        controller.empty.dst.y = center_y - enter_w * .5;
     }
-    if (controller.exit.dst) {
-        controller.exit.dst.w = dims.x * 0.29;
-        controller.exit.dst.h = dims.x * 0.29;
-    }
-    if (controller.empty.dst) {
-        controller.empty.dst.w = dims.x * 0.29;
-        controller.empty.dst.h = dims.x * 0.29;
-    }
-    size_enter_exit(empty_origin, enter_origin);
-    size_arrows(pad);
+    size_arrows(center_x, center_y, dims.x);
 };
 export const size_controller = () => {
     const ctx = get_context();
