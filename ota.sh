@@ -13,6 +13,8 @@ if [[ -f "$base/branch" ]]; then
 fi
 
 cd $base/rqn
+git reset --hard HEAD
+git clean -fd
 git fetch
 git checkout $branch
 git pull origin $branch

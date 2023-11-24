@@ -10,8 +10,8 @@ export const drawablesPrint = () => {
 export const drawablesRenderAll = () => {
     let ctx = get_context();
     // printDrawables();
-    // ctx.ctx.fillStyle = "#808080";
-    // ctx.ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.ctx.fillStyle = "#607060";
+    ctx.ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     for (let item of Idrawables) {
         drawableRenderSingle(ctx, item);
     }
@@ -51,10 +51,10 @@ export const drawableRenderSingle = (ctx, drawable) => {
             // else 3 args
             // If !dst, fullconst ctx:Context = get_context()
             let dst = { x: 0, y: 0, w: ctx.dimensions.x, h: ctx.dimensions.y };
-            ctx.ctx.imageSmoothingEnabled = true;
             if (img.dst)
                 dst = img.dst;
             if (img.src) {
+                ctx.ctx.imageSmoothingEnabled = false;
                 ctx.ctx.drawImage(img.image, img.src.x, img.src.y, img.src.w, img.src.h, dst.x, dst.y, dst.w, dst.h);
             }
             else {
