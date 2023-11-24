@@ -10,9 +10,14 @@ export const get_drawables = () => {
 const size_input = () => {
     const dimensions = get_context().dimensions;
     if (text_input.sendBtn.dst) {
-        text_input.sendBtn.dst.x = dimensions.y > dimensions.x ?
-            dimensions.x * 0.23 :
-            dimensions.x * 0.26;
+        if (dimensions.y > dimensions.x) {
+            text_input.sendBtn.dst.x = dimensions.x * 0.25;
+            text_input.elem.style.right = '15%';
+        }
+        else {
+            text_input.sendBtn.dst.x = dimensions.x * 0.24;
+            text_input.elem.style.right = '20%';
+        }
         text_input.sendBtn.dst.y = dimensions.y * 0.55;
         text_input.sendBtn.dst.w = dimensions.x * 0.5;
         text_input.sendBtn.dst.h = dimensions.y * 0.25;
