@@ -8,32 +8,23 @@ export const get_drawables = () => {
     return text_input.drawables;
 };
 const size_input = () => {
-    const dims = get_context().dimensions;
-    if (text_input.text.dst) {
-        text_input.text.dst.x = dims.x * 0.25;
-        text_input.text.dst.y = dims.y * 0.15;
-        text_input.text.dst.w = dims.x * 0.5;
-        text_input.text.dst.h = dims.y * 0.25;
-    }
+    const dimensions = get_context().dimensions;
     if (text_input.sendBtn.dst) {
-        text_input.sendBtn.dst.x = dims.x * 0.25;
-        text_input.sendBtn.dst.y = dims.y * 0.65;
-        text_input.sendBtn.dst.w = dims.x * 0.5;
-        text_input.sendBtn.dst.h = dims.y * 0.25;
+        text_input.sendBtn.dst.x = dimensions.y > dimensions.x ?
+            dimensions.x * 0.23 :
+            dimensions.x * 0.26;
+        text_input.sendBtn.dst.y = dimensions.y * 0.55;
+        text_input.sendBtn.dst.w = dimensions.x * 0.5;
+        text_input.sendBtn.dst.h = dimensions.y * 0.25;
     }
 };
 export const start_input = (reinitialize) => {
     if (!text_input) {
-        const txt_img = new Image();
         const btn_img = new Image();
-        txt_img.addEventListener('load', () => { console.log('Loaded txt img'); });
-        btn_img.addEventListener('load', () => { console.log('Loaded txt img'); });
-        txt_img.src = 'resources/pwtxt.svg';
-        btn_img.src = 'resources/send.svg';
+        btn_img.src = 'resources/send.png';
         text_input = {
             elem: document.getElementById("textinput"),
             drawables: [],
-            text: { ...new_drawable_img(), dst: new_rect(), image: txt_img },
             sendBtn: { ...new_drawable_img(), dst: new_rect(), image: btn_img },
             buttons: []
         };
@@ -51,9 +42,8 @@ export const start_input = (reinitialize) => {
             prevValue = currentValue; // Update previous value
             console.log("Changed", currentValue);
         };
-        text_input.elem.addEventListener('focus', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
+        // Restore scroll position on blur
+        text_input.elem.addEventListener('blur', () => {
             window.scrollTo(0, 0);
         });
         let button = new Button(text_input.sendBtn.dst, undefined, undefined, () => {
@@ -62,7 +52,7 @@ export const start_input = (reinitialize) => {
             stop_input();
         });
         text_input.buttons.push(button);
-        text_input.drawables = [text_input.sendBtn, text_input.text];
+        text_input.drawables = [text_input.sendBtn];
         buttons_add(button);
     }
     if (reinitialize) {
