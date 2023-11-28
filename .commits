@@ -1,6 +1,6 @@
-GameNite main b05033a
-rqn-scripts main bc55d54
+GameNite remove_games_from_rqn 37730f6
+rqn-scripts remove_games_from_rqn 2779fc7
 ServerAccess main edb6320
 ControlpadServer main 9700d14
 WebCP main e454d95
-SystemApps main 02a98fe
+SystemApps remove_games_from_rqn 010c90c
