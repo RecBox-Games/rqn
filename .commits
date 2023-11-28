@@ -3,4 +3,4 @@ rqn-scripts remove_games_from_rqn 2779fc7
 ServerAccess main edb6320
 ControlpadServer main 9700d14
 WebCP main e454d95
-SystemApps remove_games_from_rqn 010c90c
+SystemApps remove_games_from_rqn eed5d12
