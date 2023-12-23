@@ -9,12 +9,12 @@ alsa_options_dmic="options snd-hda-intel dmic_detect=0"
 # set audio if necessary
 if [[ ! -f "$alsa_base_file" ]]; then
     # File does not exist, create it and add the line
-    echo "$alsa_options_dmic" > "$alsa_base_file"
-    echo "File did not exist - created and added the line."
+    sudo bash -c echo "$alsa_options_dmic" > "$alsa_base_file"
+    /sbin/reboot/
 elif ! grep -qF -- "$alsa_base_file" "$alsa_options_dmic_dmic"; then
     # File exists but does not contain the line, add the line
-    echo "$alsa_options_dmic" >> "$alsa_base_file"
-    echo "File existed but line was not found - added the line."
+    sudo bash -c echo "$alsa_options_dmic" >> "$alsa_base_file"
+    /sbin/reboot/
 fi
 
 # npm install if we need to
