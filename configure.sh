@@ -7,14 +7,16 @@ alsa_base_file="/etc/modprobe.d/alsa-base.conf"
 alsa_options_dmic="options snd-hda-intel dmic_detect=0"
 
 # set audio if necessary
-if [[ ! -f "$alsa_base_file" ]]; then
+if [[ ! -f "$alsa_file" ]]; then
     # File does not exist, create it and add the line
-    sudo bash -c echo "$alsa_options_dmic" > "$alsa_base_file"
-    /sbin/reboot/
-elif ! grep -qF -- "$alsa_base_file" "$alsa_options_dmic_dmic"; then
+    sudo bash -c "echo '$alsa_options' > '$alsa_file'"
+    echo "File did not exist - created and added the line."
+    /sbin/reboot
+elif ! grep -qFx -- "$alsa_options" "$alsa_file"; then
     # File exists but does not contain the line, add the line
-    sudo bash -c echo "$alsa_options_dmic" >> "$alsa_base_file"
-    /sbin/reboot/
+    sudo bash -c "echo '$alsa_options' >> '$alsa_file'"
+    echo "File existed but line was not found - added the line."
+    /sbin/reboot
 fi
 
 # npm install if we need to
