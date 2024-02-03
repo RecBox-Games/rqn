@@ -78,6 +78,16 @@ else
 fi
 
 # currently for fruitmerge only
+REQUIRED_PACKAGES=("unclutter" "xdotool")
+
+for pkg in "${REQUIRED_PACKAGES[@]}"; do
+    if ! dpkg -l | grep -qw $pkg; then
+        echo "Package $pkg is not installed. Installing now."
+        sudo apt-get update && sudo apt-get install -y $pkg
+    else
+        echo "Package $pkg is already installed."
+    fi
+done
 if ! command -v python3 &> /dev/null
 then
     echo "Python 3 could not be found. Please install Python 3."
@@ -98,11 +108,6 @@ pip3 install websockets pyautogui Pillow
 # Attempt to install tkinter for Debian/Ubuntu
 if [ -f /etc/debian_version ]; then
     sudo apt-get install -y python3-tk
-fi
-
-# Attempt to install tkinter for Fedora/Red Hat
-if [ -f /etc/redhat-release ]; then
-    sudo dnf install -y python3-tkinter
 fi
 
 # end of fruit merge dependencies installation
