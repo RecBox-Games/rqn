@@ -70,9 +70,40 @@ dpkg -l | grep -qw $QRENCODE
 # Check the exit status of the previous command
 # If the package is not installed, the exit status will be non-zero
 if [ $? -ne 0 ]; then
-    echo "Package $PACKAGE_NAME is not installed. Installing now."
+    echo "Package $QRENCODE is not installed. Installing now."
     sudo apt-get update
     sudo apt-get install -y $QRENCODE
 else
-    echo "Package $PACKAGE_NAME is already installed."
+    echo "Package $QRENCODE is already installed."
 fi
+
+# currently for fruitmerge only
+if ! command -v python3 &> /dev/null
+then
+    echo "Python 3 could not be found. Please install Python 3."
+    exit 1
+fi
+
+# Check for pip
+if ! command -v pip3 &> /dev/null
+then
+    echo "pip3 could not be found. Attempting to install..."
+    sudo apt-get update
+    sudo apt-get install -y python3-pip
+fi
+
+# Install Python packages
+pip3 install websockets pyautogui Pillow
+
+# Attempt to install tkinter for Debian/Ubuntu
+if [ -f /etc/debian_version ]; then
+    sudo apt-get install -y python3-tk
+fi
+
+# Attempt to install tkinter for Fedora/Red Hat
+if [ -f /etc/redhat-release ]; then
+    sudo dnf install -y python3-tkinter
+fi
+
+# end of fruit merge dependencies installation
+
