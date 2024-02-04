@@ -103,7 +103,7 @@ then
 fi
 
 # Install Python packages
-pip3 install websockets pyautogui Pillow selinum
+pip3 install websockets pyautogui Pillow selenium
 
 # Attempt to install tkinter for Debian/Ubuntu
 if [ -f /etc/debian_version ]; then
