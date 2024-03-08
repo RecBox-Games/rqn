@@ -14,10 +14,7 @@ function isAdmin() {
     return localStorage.getItem('isAdmin') === 'true';
 }
 
-// ---------------------- create menu  ------------------------------
-
-
-// ------------------------------ Menu Elements ----------------------------- //
+// ------------------------------ Menu Elements -------------------------
 
 function createMenuButton() {
     const menuButton = document.createElement('button');
@@ -27,7 +24,7 @@ function createMenuButton() {
 
     menuButton.style.position = 'fixed';
     menuButton.style.top = '10px';
-    menuButton.style.left = '10px';
+    menuButton.style.right = '10px'
     menuButton.style.zIndex = '1002';
     menuButton.style.backgroundColor = 'transparent';
     menuButton.style.border = 'none';
@@ -80,11 +77,10 @@ function togglePopup() {
     const isHidden = popup.style.display === 'none';
     popup.style.display = isHidden ? 'block' : 'none';
     overlay.style.display = isHidden ? 'block' : 'none';
+    if(isHidden) showMainMenu();
 }
 
-
-
-// ------------------------- Orientation Check ----------------------------------
+// ------------------------- Orientation Check ---------------------------
 var viewWidth = 0;
 var viewHeight = 0;
 var isPortrait = true;
@@ -110,6 +106,7 @@ function dispatchViewportEvent() {
     document.dispatchEvent(viewport_event);
 }
 
+// ------------------------- Menu Sub Elements -----------------------------
 
 function showMainMenu() {
     const popup = document.getElementById('universal-popup');
@@ -148,9 +145,9 @@ function showMainMenu() {
     inviteButton.style.top = '20%';
     inviteButton.style.right = '4%';
 
-    if (window.innerWidth > window.innerHeight) {
+    if (!isPortrait) {
 	closeButton.style.height = '8vh';
-	inviteButton.style.height = '6vh';
+	inviteButton.style.height = '7vh';
     }
     else {
 	closeButton.style.height = '5vh';
@@ -189,13 +186,13 @@ function showAdminButton() {
     adminButton.style.top = '20%';
     adminButton.style.right = '4%';
 
-    if (window.innerWidth > window.innerHeight) {
+    if (!isPortrait) {
 	popup.style.height = '30%';
-	adminButton.style.height = '6vh';	
+	adminButton.style.height = '7vh';
     }
     else {
 	popup.style.height = '20%';
-	adminButton.style.height = '5vh';	
+	adminButton.style.height = '5vh';
     }
 
    
@@ -220,9 +217,9 @@ function showQuitButton() {
     quitButton.style.top = '20%';
     quitButton.style.right = '4%';
 
-    if (window.innerWidth > window.innerHeight) {
+    if (!isPortrait) {
 	popup.style.height = '45%';
-	quitButton.style.height = '6vh';	
+	quitButton.style.height = '7vh';
     }
     else {
 	popup.style.height = '30%';
@@ -252,8 +249,8 @@ function showPlayerMenuButton() {
     showPlayerMenuButton.style.top = '20%';
     showPlayerMenuButton.style.right = '4%';
 
-    if (window.innerWidth > window.innerHeight) {
-	showPlayerMenuButton.style.height = '6vh';	
+    if (!isPortrait) {
+	showPlayerMenuButton.style.height = '7vh';
     }
     else {
 	popup.style.height = '30%';
@@ -265,7 +262,7 @@ function showPlayerMenuButton() {
     popup.appendChild(showPlayerMenuButton);
 }
 
-// ---------------------- password prompt ------------------------------
+// ---------------------- Password Prompt ----------------------------------
 
 function showPasswordPrompt() {
     const popup = document.getElementById('universal-popup');
@@ -303,7 +300,7 @@ function checkPassword() {
     }
 }
 
-// ------------------------- handle admin menu ------------------------------
+// ------------------------- Handle Admin Menu ------------------------------
 
 function switchToPlayerControls() {
     localStorage.setItem('isAdmin', 'false');
@@ -398,7 +395,7 @@ function inviteOthers() {
 function displayQrCodeImage() {
     const popup = document.getElementById('universal-popup');
     popup.innerHTML = '';
-    if (window.innerWidth > window.innerHeight) popup.style.height = '50%';
+    if (!isPortrait) popup.style.height = '50%';
     else popup.style.height = '25%';
     const qrCode = document.createElement('img');
     qrCode.src = 'resources/qr.png';
@@ -478,15 +475,12 @@ function close_and_back_buttons() {
 
 }
 
-// -----------------------------------------------------------------------------
-// Wait for the DOM to be fully loaded
+// ------------------------When Dom is loaded-----------------------------------
+
 document.addEventListener('DOMContentLoaded', () => {
     const bodyElement = document.body;
     const menuButton = createMenuButton();
     const overlay = createOverlay();
-    const popup = createPopup();
-    bodyElement.appendChild(menuButton);
-    bodyElement.appendChild(overlay);
     //
     dispatchViewportEvent();
     setInterval(dimsCheck, 100);
