@@ -70,45 +70,29 @@ dpkg -l | grep -qw $QRENCODE
 # Check the exit status of the previous command
 # If the package is not installed, the exit status will be non-zero
 if [ $? -ne 0 ]; then
-    echo "Package $QRENCODE is not installed. Installing now."
+    echo "Package $PACKAGE_NAME is not installed. Installing now."
     sudo apt-get update
     sudo apt-get install -y $QRENCODE
 else
-    echo "Package $QRENCODE is already installed."
+    echo "Package $PACKAGE_NAME is already installed."
 fi
 
-# currently for fruitmerge only
-REQUIRED_PACKAGES=("unclutter" "xdotool")
 
-for pkg in "${REQUIRED_PACKAGES[@]}"; do
-    if ! dpkg -l | grep -qw $pkg; then
-        echo "Package $pkg is not installed. Installing now."
-        sudo apt-get update && sudo apt-get install -y $pkg
-    else
-        echo "Package $pkg is already installed."
-    fi
-done
-if ! command -v python3 &> /dev/null
-then
-    echo "Python 3 could not be found. Please install Python 3."
-    exit 1
+# gamepad.py pip/python dependencies
+if ! pip3 list | grep pynput > /dev/null; then
+    echo "pynput is not installed. Installing..."
+    pip3 install pynput
 fi
-
-# Check for pip
-if ! command -v pip3 &> /dev/null
-then
-    echo "pip3 could not be found. Attempting to install..."
-    sudo apt-get update
-    sudo apt-get install -y python3-pip
+if ! pip3 list | grep python-uinput > /dev/null; then
+    echo "python-uinput is not installed. Installing..."
+    pip3 install python-uinput
 fi
-
-# Install Python packages
-pip3 install websockets pyautogui Pillow selenium
-
-# Attempt to install tkinter for Debian/Ubuntu
-if [ -f /etc/debian_version ]; then
-    sudo apt-get install -y python3-tk
+if ! pip3 list | grep cffi > /dev/null; then
+    echo "cffi for python is not installed. Installing..."
+    pip3 install cffi
 fi
-
-# end of fruit merge dependencies installation
-
+# uinput permissions
+if [[ "$(stat -c '%a' /dev/uinput)" == "600" ]]; then
+    sudo chmod 666 /dev/uinput
+    echo "Note: /dev/input permissions were set to 666"
+fi
