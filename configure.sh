@@ -76,3 +76,23 @@ if [ $? -ne 0 ]; then
 else
     echo "Package $PACKAGE_NAME is already installed."
 fi
+
+
+# gamepad.py pip/python dependencies
+if ! pip3 list | grep pynput > /dev/null; then
+    echo "pynput is not installed. Installing..."
+    pip3 install pynput
+fi
+if ! pip3 list | grep python-uinput > /dev/null; then
+    echo "python-uinput is not installed. Installing..."
+    pip3 install python-uinput
+fi
+if ! pip3 list | grep cffi > /dev/null; then
+    echo "cffi for python is not installed. Installing..."
+    pip3 install cffi
+fi
+# uinput permissions
+if [[ "$(stat -c '%a' /dev/uinput)" == "600" ]]; then
+    sudo chmod 666 /dev/uinput
+    echo "Note: /dev/input permissions were set to 666"
+fi
