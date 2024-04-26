@@ -3,6 +3,21 @@
 base="/home/requin"
 rqn="$base/rqn"
 sshdir="$base/.ssh"
+alsa_base_file="/etc/modprobe.d/alsa-base.conf"
+alsa_options_dmic="options snd-hda-intel dmic_detect=0"
+
+# set audio if necessary
+if [[ ! -f "$alsa_base_file" ]]; then
+    # File does not exist, create it and add the line
+    sudo bash -c "echo '$alsa_options_dmic' > '$alsa_base_file'"
+    echo "File did not exist - created and added the line."
+    /sbin/reboot
+elif ! grep -qFx -- "$alsa_options_dmic" "$alsa_base_file"; then
+    # File exists but does not contain the line, add the line
+    sudo bash -c "echo '$alsa_options_dmic' >> '$alsa_base_file'"
+    echo "File existed but line was not found - added the line."
+    /sbin/reboot
+fi
 
 # npm install if we need to
 if [[ ! -d "$rqn/webcp/node_modules" ]]; then
@@ -60,4 +75,24 @@ if [ $? -ne 0 ]; then
     sudo apt-get install -y $QRENCODE
 else
     echo "Package $PACKAGE_NAME is already installed."
+fi
+
+
+# gamepad.py pip/python dependencies
+if ! pip3 list | grep pynput > /dev/null; then
+    echo "pynput is not installed. Installing..."
+    pip3 install pynput
+fi
+if ! pip3 list | grep python-uinput > /dev/null; then
+    echo "python-uinput is not installed. Installing..."
+    pip3 install python-uinput
+fi
+if ! pip3 list | grep cffi > /dev/null; then
+    echo "cffi for python is not installed. Installing..."
+    pip3 install cffi
+fi
+# uinput permissions
+if [[ "$(stat -c '%a' /dev/uinput)" == "600" ]]; then
+    sudo chmod 666 /dev/uinput
+    echo "Note: /dev/input permissions were set to 666"
 fi
