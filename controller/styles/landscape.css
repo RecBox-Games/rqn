@@ -1,0 +1,155 @@
+/* Landscape styles */
+#dpad-container-landscape {
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    width: 100%;
+    position: absolute;
+    top: 5%;
+}
+#clarity-text-landscape {
+    position: absolute;
+    font-size: 5vh;
+    top: 5%;
+    left: 10%;
+    width: 80%;
+    justify-content: center;
+}
+#controls-landscape {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.arrow-buttons-landscape {
+    position: relative;
+    left: 5vw;
+    display: flex;
+    flex-direction: column; 
+}
+
+.button-row-landscape {
+    display: flex;
+    flex-direction: row;
+    margin-top: 12vh;
+    margin-right: 15vw;
+}
+.up-row-landscape {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.arrow-button-landscape {
+    padding: 0;
+}
+.middle-row-landscape {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 15vw;
+}
+.down-row-landscape .arrow-button-landscape{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.arrow-button-landscape img {
+    width: calc((100vh + 100vw * 2) / 3 * 0.145);
+    height: calc((100vh + 100vw * 2) / 3 * 0.14);   
+}
+
+#enter-button-landscape {
+    position: relative;
+    right: 10%;
+    top: 10%;
+}
+
+#enter-button-landscape img {
+    position: relative;
+    width: calc((100vh + 100vw * 2) / 3 * 0.2);
+    height: calc((100vh + 100vw * 2) / 3 * 0.2);
+}
+
+#enter-row-landscape {
+    position: relative;
+    left: 65%;
+}
+
+#back-row-landscape img{
+    position: absolute;
+    top: 47.5%;
+    right: 25%;
+    width: calc((100vh + 100vw * 2) / 3 * 0.15);
+    height: calc((100vh + 100vw * 2) / 3 * 0.15);    
+}
+
+
+#input-row-landscape {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* This will center the input and button horizontally */
+    position: absolute;
+    bottom: 15%; /* Adjust as needed for position from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%; /* Set this to the desired width of the input box and button */
+}
+
+#input-button-landscape {
+    width: 100%; /* The input button container takes the full width of #input-row-landscape */
+    box-sizing: border-box; /* Includes padding and border in the element's total width */
+    margin-bottom: 10px; /* Space between the input and the send button */
+}
+
+#input-text-landscape {
+    width: 100%; /* The input takes the full width of its container */
+}
+
+#send-button-landscape {
+    width: 100%;            /* The send button matches the width of the input box */
+}
+#send-button-img {    
+    width: 100%;            /*Send button image matches the image box */        
+}
+
+/* The button does not need specific alignment as it will inherit from its parent flex container */
+
+#popup-landscape {
+    width: 15vw;
+    height: 15vh;
+    background-color: #997950;
+    display: none; /* Enable flexbox for centering content inside the popup */
+    justify-content: center; /* Center children horizontally inside the popup */
+    align-items: center; /* Center children vertically inside the popup */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+#quit-button-landscape {
+    position: absolute;
+    left: 50%;
+    top: 75%;
+    transform: translate(-50%, -50%);
+}
+
+#close-button-landscape {
+    position: absolute;
+    left: 95%;
+    top: 10%;
+    transform: translate(-50%, -50%);
+}
+
+#eye-landscape {
+    position: absolute;
+    top: 2%;
+    left: 85%;
+}
+
+#eye-landscape img {
+    width: 20px;
+    height: 20px;
+}
