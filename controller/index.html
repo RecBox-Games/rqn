@@ -2,45 +2,110 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" /> 
     <title>GameNite Controlpad</title>
-    <style>
-      html,
-      body {
-          touch-action: none;
-          overflow: hidden;
-          width: 100vw;
-          height: 100vh;
-          margin: 0;
-          padding: 0;
-          touch-action: none;
-      }
-      canvas {
-          display: block
-      }
-      input {
-	  display: none;
-	  width: 50%;
-	  z-index: 1;
-	  position: absolute;
-	  bottom: 50%;
-	  font-size: 22px;
-	  border: 4px solid #84dbfd;
-	  border-radius: 8px;
-	  padding: 5px 35px;
-          background: url("/resources/password_icon.png") no-repeat left, lightgray;
-          background-size: 20px;
-          background-position: 10px;
-      }
+    <link rel="stylesheet" type="text/css" href="styles/portrait.css">
+    <link rel="stylesheet" type="text/css" href="styles/landscape.css">
 
+    <style>
+      :root {
+          touch-action: pan-x pan-y;
+          height: 100% 
+      }
+      html {
+          height: 100%;
+          overflow: hidden;
+          background-color: #607060
+      }
+      button {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+      }      
     </style>
+    <script type="module" src="app.js"></script>
   </head>
   <body>
-    <canvas></canvas>
-    <input id="textinput" type="text"></input>
-    <!-- <script type="module" src="app.js"></script> -->
-    <!-- <script mimetype="application/js" type="module" src="init.js"></script> -->
-    <script type="module" src="./index.js"></script>
-    <!-- <script type="module" src="init.js"></script> -->
+    <!-- d pad inputs -->
+    <div id="dpad-container-portrait">
+      <div class="dpad-row" id="back-row">
+        <button id="back-button" data-message="back"> <img src="resources/exit.png" alt="Back"> </button>
+      </div>
+      <div class="row-containers">
+        <div class="up-row">
+          <button class="arrow-button" data-message="up"> <img src="resources/up.png" alt="Up"> </button>
+	</div>
+        <div class="middle-row">
+          <button class="arrow-button" data-message="left"> <img src="resources/left.png" alt="Left"> </button>
+          <button id="enter-button"    data-message="select"> <img src="resources/enter.png" alt="Select"> </button>
+          <button class="arrow-button" data-message="right"> <img src="resources/right.png" alt="Right"> </button>
+        </div>
+	
+        <div class="down-row">
+          <button class="arrow-button" data-message="down"> <img src="resources/down.png" alt="Down"> </button>        </div>
+      </div>
+    </div>
+
+    
+    <div id="input-row">
+      <div id="input-button"> <input id="input-text-portrait" name="input-text-portrait" type="password" style="visibility: none">
+	<span id="eye-portrait"> <img src="resources/eye-icon.png"></span>
+      </div>       
+      <div style = "width: 100%">
+	<button id="send-button" data-message="select" style="padding: 0; width: 100%">
+	  <img style = "width: 100%" src="resources/send.png">
+	</button>
+      </div>
+    </div>
+
+
+    
+    <!----------------------------------------------LANDSCAPE----------------------------------------->
+    
+    <div id="dpad-container-landscape">
+      <!-- Flex container for arrows and button rows -->
+      <div id="controls-landscape">
+        <!-- Container for arrow buttons -->
+        <div class="arrow-buttons-landscape">
+          <div class="dpad-row-landscape up-row-landscape">
+            <button class="arrow-button-landscape" data-message="up"> <img src="resources/up.png" alt="Up"> </button>
+          </div>
+          <div class="dpad-row-landscape middle-row-landscape">
+            <button class="arrow-button-landscape" data-message="left"> <img src="resources/left.png" alt="Left"> </button>
+            <button class="arrow-button-landscape" data-message="right"> <img src="resources/right.png" alt="Right"> </button>
+          </div>
+          <div class="dpad-row-landscape down-row-landscape">
+            <button class="arrow-button-landscape" data-message="down"> <img src="resources/down.png" alt="Down"> </button>
+          </div>
+        </div>
+        <!-- Container for Enter, Back, and Quit buttons -->
+        <div class="button-row-landscape">
+          <div id="back-row-landscape">
+            <button id="back-button-landscape" data-message="back"> <img src="resources/exit.png" alt="Back"> </button>
+          </div>
+          <div id="enter-row-landscape">
+            <button id="enter-button-landscape" data-message="select"> <img src="resources/enter.png" alt="Enter"> </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    
+    <!-- Rest of the landscape layout -->
+    
+    <div id="input-row-landscape" style = "display: none"> 
+      <div id="input-button-landscape">
+        <input type="password" id="input-text-landscape" name="input-text-landscape">
+	<span id="eye-landscape"> <img src="resources/eye-icon.png"></span>	  
+      </div>
+      <button id="send-button-landscape" data-message="select" style="padding: 0; width: 100%">
+        <img id = "send-button-img" src="resources/send.png" alt="Send">
+      </button>
+    </div>
+    
+    <!-- maybe maybe maybe start game button -->
+    <!-- Instructions for input -->
+    <div id="clarity-text-landscape" style="display: none"> <strong class="clarity-text"> When succesfully connected, scan the new QR code on the bottom left of your TV screen. </strong> </div>
+    <div id="clarity-text-portrait" style="display: none"> <strong class="clarity-text">  When succesfully connected, scan the new QR code on the bottom left of your TV screen. </strong> </div>
   </body>
 </html>
