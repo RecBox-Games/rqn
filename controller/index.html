@@ -45,7 +45,6 @@
           <button class="arrow-button" data-message="down"> <img src="resources/down.png" alt="Down"> </button>        </div>
       </div>
     </div>
-
     
     <div id="input-row">
       <div id="input-button"> <input id="input-text-portrait" name="input-text-portrait" type="password" style="visibility: none">
@@ -93,7 +92,7 @@
     
     <!-- Rest of the landscape layout -->
     
-    <div id="input-row-landscape" style = "display: none"> 
+    <div id="input-row-landscape" style = "display: none">
       <div id="input-button-landscape">
         <input type="password" id="input-text-landscape" name="input-text-landscape">
 	<span id="eye-landscape"> <img src="resources/eye-icon.png"></span>	  
@@ -105,7 +104,16 @@
     
     <!-- maybe maybe maybe start game button -->
     <!-- Instructions for input -->
-    <div id="clarity-text-landscape" style="display: none"> <strong class="clarity-text"> When succesfully connected, scan the new QR code on the bottom left of your TV screen. </strong> </div>
-    <div id="clarity-text-portrait" style="display: none"> <strong class="clarity-text">  When succesfully connected, scan the new QR code on the bottom left of your TV screen. </strong> </div>
+
+    <div id="clarity-text-landscape" style="display: none">
+      <strong class="clarity-text">Once you enter a password the console may drop the connection to your phone in order to connect to another network.<br>You will need to reconnect your phone.</strong>
+    </div>
+    <div id="clarity-text-portrait" style="display: none">
+      <strong class="clarity-text">Once you enter a password the console may drop the connection to your phone in order to connect to another network.<br><br>You will need to reconnect your phone.</strong>
+    </div>
+</div>
+
+
+          <button id="back-button-input" data-message="back"> <img src="resources/exit.png" alt="Back"> </button>
   </body>
 </html>
