@@ -59,11 +59,8 @@ function layoutElements(isPortrait) {
             document.getElementById("input-row").style.display = "flex";
             document.getElementById("input-text-portrait").style.display = "flex";
 	    document.getElementById("send-button").style.display = "flex";
-	    //
-	    //	    document.getElementById("input-row-landscape").style.display = "none";
-	    //      document.getElementById("input-text-landscape").style.display = "none";
-	    //      document.getElementById("send-button-landscape").style.display = "none";
 	    document.getElementById("clarity-text-landscape").style.display = "none";
+            document.getElementById("back-button-input").style.display = "flex";
         }
     }
     else {
@@ -75,17 +72,13 @@ function layoutElements(isPortrait) {
         else {
             hideDefaultController();
             document.getElementById("clarity-text-landscape").style.display = "flex";
-	    //            document.getElementById("input-row-landscape").style.display = "flex";
-	    //            document.getElementById("input-text-landscape").style.display = "flex"
 	    document.getElementById("send-button-landscape").style.display = "none";
 	    //
             document.getElementById("clarity-text-portrait").style.display = "none";
-	    //      document.getElementById("input-row").style.display = "none";
-	    //      document.getElementById("input-text-portrait").style.display = "none";
-	    //	    document.getElementById("send-button").style.display = "none";
 	    document.getElementById("input-row").style.display = "flex";
             document.getElementById("input-text-portrait").style.display = "flex";
 	    document.getElementById("send-button").style.display = "flex";
+            document.getElementById("back-button-input").style.display = "flex";
 
         }
     }
@@ -103,10 +96,6 @@ document.getElementById("input-text-portrait").addEventListener('blur', () => {
     window.scrollTo(0, 0);
 });
 
-document.getElementById("input-text-landscape").addEventListener("blur", () => {
-    window.scrollTo(0,0);
-});
-
 //////////////////////////////// INPUT HELPERS //////////////////////////////////////
 
 function hideDefaultController() {
@@ -116,7 +105,7 @@ function hideDefaultController() {
 
 function hideInputController() {
     document.getElementById("input-row").style.display = "none";
-    document.getElementById("input-row-landscape").style.display = "none";
+    document.getElementById("back-button-input").style.display = "none";
     document.getElementById("clarity-text-landscape").style.display = "none";
     document.getElementById("clarity-text-portrait").style.display = "none";  
 }
@@ -140,25 +129,18 @@ function endInput() {
 function handleInput() {
     let text_input = document.getElementById("input-text-portrait");
     let eye_icon = document.getElementById("eye-portrait");
-    let prev_value = "";
+    let sendPasswordButton = document.getElementById("send-button");   
 
     text_input.setAttribute('autocomplete', 'off');
     text_input.setAttribute('autocorrect', 'off');
     text_input.setAttribute('autocapitalize', 'off');
     text_input.setAttribute('spellcheck', false);
     
-    text_input.oninput = function (e) {
-        const currentValue = e.target.value;
-        if (currentValue.length < prev_value.length) {
-            const deletedCount = prev_value.length - currentValue.length;
-            for (let i = 0; i < deletedCount; i++) {
-                send_controlpad_message("back");
-            }
-        } else {
-            send_controlpad_message("]" + currentValue.slice(prev_value.length));
-        }
-        prev_value = currentValue;
-    }
+    sendPasswordButton.addEventListener('click', function() {
+        const password = text_input.value;
+        send_controlpad_message("]" + password); // Send the entire password
+        text_input.value = ""; // Clear the input field after sending the password
+    });
     
     eye_icon.onclick = function (e) {
         if (text_input.type === "password") {
