@@ -68,6 +68,7 @@ class GameWebSocket {
         if(_DEBUG) {
             console.log("WebSocket closed on " + this.ip + ":" + this.port);
         }
+        setTimeout(() => this.initializeWebSocket(), 1000);
     }
 
     // event handler for the Websocket onmessage event
