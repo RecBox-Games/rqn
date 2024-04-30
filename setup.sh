@@ -45,9 +45,11 @@ npm install net
 npm install socketio
 npm install socket.io
 
-# install necessary packages for launcher.py
+# install necessary python packages
 apt install -y python3-pip
-pip3 install pygame
+pip3 install pynput
+pip3 install python-uinput
+pip3 install cffi
 
 # get rid of the window manager
 apt remove -y gdm3
@@ -56,6 +58,10 @@ systemctl disable lightdm.service
 
 # install tools
 apt install -y curl git
+apt install -y qrencode
+
+# set permissions on /dev/uinput
+chmod 666 /dev/uinput
 
 # set github as known host
 ssh-keyscan github.com > $base/.ssh/known_hosts
