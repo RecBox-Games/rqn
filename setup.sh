@@ -7,6 +7,9 @@ dest="$base/rqn"
 script=$(readlink -f "$0")
 # Absolute path this script is in
 abs_path=$(dirname "$script")
+alsa_base_file="/etc/modprobe.d/alsa-base.conf"
+alsa_options_dmic="options snd-hda-intel dmic_detect=0"
+
 
 
 # .id data
@@ -69,6 +72,19 @@ if ! [ -d "$base/rqnio" ]; then
     chgrp requin $base/rqnio
     chown requin $base/rqnio
 fi
+
+# set audio if necessary
+if [[ ! -f "$alsa_base_file" ]]; then
+    # File does not exist, create it and add the line
+    sudo bash -c "echo '$alsa_options_dmic' > '$alsa_base_file'"
+    echo "File did not exist - created and added the line."
+    /sbin/reboot
+elif ! grep -qFx -- "$alsa_options_dmic" "$alsa_base_file"; then
+    # File exists but does not contain the line, add the line
+    sudo bash -c "echo '$alsa_options_dmic' >> '$alsa_base_file'"
+    echo "File existed but line was not found - added the line."
+fi
+
 
 # have rqn software run on startup
 apt install -y mingetty
