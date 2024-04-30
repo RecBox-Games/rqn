@@ -46,22 +46,12 @@ if [[ -z "$(cat $sshdir/known_hosts | grep qcYjThFg)" ]]; then
     cat $sshdir/known_hosts
 fi
 
-# install apt-pacakges required for commands
-QRENCODE="qrencode"
 
-# Check if the package is installed
-dpkg -l | grep -qw $QRENCODE
-
-# Check the exit status of the previous command
-# If the package is not installed, the exit status will be non-zero
-if [ $? -ne 0 ]; then
-    echo "Package $PACKAGE_NAME is not installed. Installing now."
-    sudo apt-get update
-    sudo apt-get install -y $QRENCODE
-else
-    echo "Package $PACKAGE_NAME is already installed."
+# configure ssh daemon if it isn't configured already
+if ! command -v qrencode >/dev/null; then
+    echo "installing ssh things"
+    sudo apt install -y qrencode
 fi
-
 
 # gamepad.py pip/python dependencies
 if ! pip3 list | grep pynput > /dev/null; then
@@ -76,6 +66,7 @@ if ! pip3 list | grep cffi > /dev/null; then
     echo "cffi for python is not installed. Installing..."
     pip3 install cffi
 fi
+
 # uinput permissions
 if [[ "$(stat -c '%a' /dev/uinput)" == "600" ]]; then
     sudo chmod 666 /dev/uinput
