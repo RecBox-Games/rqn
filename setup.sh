@@ -7,10 +7,6 @@ dest="$base/rqn"
 script=$(readlink -f "$0")
 # Absolute path this script is in
 abs_path=$(dirname "$script")
-alsa_base_file="/etc/modprobe.d/alsa-base.conf"
-alsa_options_dmic="options snd-hda-intel dmic_detect=0"
-
-
 
 # .id data
 read -p "Enter the number of the box this is in the alpha batch (e.g. 01):" box_number
@@ -61,7 +57,9 @@ apt install -y curl git
 apt install -y qrencode
 
 # set permissions on /dev/uinput
+set +e
 chmod 666 /dev/uinput
+set -e
 
 # set github as known host
 ssh-keyscan github.com > $base/.ssh/known_hosts
@@ -79,18 +77,8 @@ if ! [ -d "$base/rqnio" ]; then
     chown requin $base/rqnio
 fi
 
-# set audio if necessary
-if [[ ! -f "$alsa_base_file" ]]; then
-    # File does not exist, create it and add the line
-    sudo bash -c "echo '$alsa_options_dmic' > '$alsa_base_file'"
-    echo "File did not exist - created and added the line."
-    /sbin/reboot
-elif ! grep -qFx -- "$alsa_options_dmic" "$alsa_base_file"; then
-    # File exists but does not contain the line, add the line
-    sudo bash -c "echo '$alsa_options_dmic' >> '$alsa_base_file'"
-    echo "File existed but line was not found - added the line."
-fi
-
+# make audio work
+echo 'options snd-hda-intel dmic_detect=0' > /etc/modprobe.d/alsa-base.conf
 
 # have rqn software run on startup
 apt install -y mingetty
