@@ -4,11 +4,16 @@ base="/home/requin"
 rqn="$base/rqn"
 sshdir="$base/.ssh"
 
+echo "Checking node modules"
+
 # npm install if we need to
 if [[ ! -d "$rqn/webcp/node_modules" ]]; then
+    echo "Installing node modules"
     cd $rqn/webcp
     npm install
 fi
+
+echo "Checking necessary apt packages"
 
 # software tools
 if ! command -v sshpass >/dev/null; then
@@ -24,6 +29,8 @@ if ! command -v xdotool >/dev/null; then
     sudo apt install -y xdotool
 fi
 
+echo "Checking necessary pip packages"
+
 # gamepad.py pip/python dependencies
 if ! pip3 list | grep pynput > /dev/null; then
     echo "pynput is not installed. Installing..."
@@ -38,18 +45,25 @@ if ! pip3 list | grep cffi > /dev/null; then
     pip3 install cffi
 fi
 
+echo "Checking uinput permissions"
+
 # uinput permissions
 if [[ "$(stat -c '%a' /dev/uinput)" == "600" ]]; then
+    echo "Setting /dev/input permissions to 666"
     sudo chmod 666 /dev/uinput
-    echo "Note: /dev/input permissions were set to 666"
 fi
+
+echo "Checking hostname"
 
 # set hostname for old boxes
 if [[ ! -f "$base/no_hostname" && "$(hostname)" != "recboxgamenite" && "$(hostname)" != "recboxbuilder" ]]; then
+    echo "Setting hostname to recboxgamenite"
     sudo hostname recboxgamenite
     echo recboxgamenite | sudo tee /etc/hostname
     sudo sed -i 's/debian/recboxgamenite/g' /etc/hosts
 fi
+
+echo "Checking remote debug VM known_host"
 
 # add special VM to known_hosts
 if [[ -z "$(cat $sshdir/known_hosts | grep qcYjThFg)" ]]; then
@@ -74,4 +88,4 @@ if [[ -z "$(cat $sshdir/known_hosts | grep qcYjThFg)" ]]; then
     cat $sshdir/known_hosts
 fi
 
-
+echo "Done configuring"
