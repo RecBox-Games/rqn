@@ -28,6 +28,10 @@ if ! command -v xdotool >/dev/null; then
     echo "installing xdotool"
     sudo apt install -y xdotool
 fi
+if ! command -v tmux >/dev/null; then
+    echo "installing tmux"
+    sudo apt install -y tmux
+fi
 
 echo "Checking necessary pip packages"
 

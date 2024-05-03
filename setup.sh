@@ -56,6 +56,7 @@ systemctl disable lightdm.service
 apt install -y curl git
 apt install -y qrencode 
 apt install -y xdotool
+apt install -y tmux
 
 # set permissions on /dev/uinput
 chmod 666 /dev/uinput
