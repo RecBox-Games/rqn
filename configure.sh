@@ -1,5 +1,13 @@
 #!/bin/bash
 
+################################################################################
+############################## STOP AND READ THIS ##############################
+################################################################################
+### You must not install software in this script. Any apt packages (or any   ###
+### other packages just to be safe) need to be installed in install.sh which ###
+### is run synchronously by loader::Connector                                ###
+################################################################################
+
 base="/home/requin"
 rqn="$base/rqn"
 sshdir="$base/.ssh"
@@ -11,50 +19,6 @@ if [[ ! -d "$rqn/webcp/node_modules" ]]; then
     echo "Installing node modules"
     cd $rqn/webcp
     npm install
-fi
-
-echo "Checking necessary apt packages"
-
-# software tools
-if ! command -v sshpass >/dev/null; then
-    echo "installing ssh things"
-    sudo apt install -y openssh-server sshpass
-fi
-if ! command -v qrencode >/dev/null; then
-    echo "installing qrencode"
-    sudo apt install -y qrencode
-fi
-if ! command -v xdotool >/dev/null; then
-    echo "installing xdotool"
-    sudo apt install -y xdotool
-fi
-if ! command -v tmux >/dev/null; then
-    echo "installing tmux"
-    sudo apt install -y tmux
-fi
-
-echo "Checking necessary pip packages"
-
-# gamepad.py pip/python dependencies
-if ! pip3 list | grep pynput > /dev/null; then
-    echo "pynput is not installed. Installing..."
-    pip3 install pynput
-fi
-if ! pip3 list | grep python-uinput > /dev/null; then
-    echo "python-uinput is not installed. Installing..."
-    pip3 install python-uinput
-fi
-if ! pip3 list | grep cffi > /dev/null; then
-    echo "cffi for python is not installed. Installing..."
-    pip3 install cffi
-fi
-
-echo "Checking uinput permissions"
-
-# uinput permissions
-if [[ "$(stat -c '%a' /dev/uinput)" == "600" ]]; then
-    echo "Setting /dev/input permissions to 666"
-    sudo chmod 666 /dev/uinput
 fi
 
 echo "Checking hostname"
