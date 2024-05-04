@@ -1,0 +1,227 @@
+input  {
+    box-sizing: border-box;
+    font-size: 22px;
+    border: 4px solid #84dfd;
+    border-radius: 8px;
+    background:url("../resources/password_icon.png") no-repeat left, lightgray;
+    background-size: 20px;
+    background-position: 10px;
+    text-indent: 25px;
+}
+
+#eye-portrait {
+    display: flex;
+    position: absolute;
+    height: 2vh;
+    top: 40%;
+    right: 10px;
+    transform: translateY(-50%);
+    justify-content: space-evenly;
+    z-index: 1;
+}
+
+#eye-portrait img {
+    width: 5vw;
+    height: 2vh;
+}
+
+#input-button {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+#back-button-input {
+    position: absolute;
+    width: calc((100vh + 100vw * 2) / 3 * 0.18);
+    height: calc((100vh + 100vw * 2) / 3 * 0.18);
+}
+
+#dpad-container-portrait{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around; /* This will space out the main container's children */
+    height: 100vh;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+#clarity-text-portrait {
+    font-size: 2.5vh;
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 80%;
+    justify-content: center;
+}
+
+
+#back-button {
+    position: absolute;    
+    padding: 0;
+    top: 2.5%; /* Position at 5% from the top of the viewport */
+    left: 5%;
+    width: calc((100vh + 100vw * 2) / 3 * 0.18);
+    height: calc((100vh + 100vw * 2) / 3 * 0.18);
+}
+
+#back-button img {
+    width: 100%;
+    height: 100%;
+}
+
+#menu-button {
+    right: 5%; /* Position at 5% from the right of the viewport */
+}
+
+.dpad-row {    
+    display: flex;
+    justify-content: center;
+}
+
+.row-containers {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 30%;
+}
+.up-row, .down-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.middle-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 4px; /* Used for adjusting horizontal gaps between left, enter, and right button */
+}
+
+.arrow-button {
+    padding: 0;
+}
+
+.arrow-button img {
+    width: calc((100vh + 100vw * 2) / 3 * 0.2);
+    height: calc((100vh + 100vw * 2) / 3 * 0.2);
+}
+#enter-button {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#enter-button img {
+    width: calc((100vh + 100vw * 2) / 3 * 0.22);
+    height: calc((100vh + 100vw * 2) / 3 * 0.22);   
+}
+
+#input-row {
+    display: none; /* Use flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically (if there is height available) */
+    position: absolute;
+    top: 50%; /* Position from the bottom */
+    left: 50%;  
+    transform: translateX(-50%); 
+    width: 50%; /* Adjust width as needed */
+    max-width: 300px; /* Set a max-width if necessary */
+}
+
+#input-text-portrait {
+    width: 100%; /* Ensure the input takes full width of the container */
+    margin-bottom: 10px; /* Adjust spacing between input and button */
+    z-index: 1;
+}
+
+
+
+@media (orientation: landscape) {
+    #back-button-input {
+        position: absolute;
+        top: 54vh;
+        right: 84vw;
+        width: calc((100vh + 100vw * 2) / 3 * 0.18);
+        height: calc((100vh + 100vw * 2) / 3 * 0.18);
+
+    }
+    #back-button-input img{
+        width: 100%;
+        height: 100;
+    }
+
+    #eye-portrait {
+	display: flex;
+	position: absolute;
+	height: 2vh;
+	top: 40%;
+	right: 10px;
+	transform: translateY(-50%);
+	justify-content: space-evenly;
+    }
+    
+    #eye-portrait img {
+	width: 3vw;
+	height: 3vh;
+    }
+
+    #input-row {
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center; /* This will center the input and button horizontally */
+	position: absolute;
+	bottom: 20%; /* Adjust as needed for position from the bottom */
+	left: 50%;
+	transform: translateX(-50%);
+	width: 30%; /* Set this to the desired width of the input box and button */
+    }
+
+    #input-button {
+	width: 100%; /* The input button container takes the full width of #input-row-landscape */
+	box-sizing: border-box; /* Includes padding and border in the element's total width */
+	margin-bottom: 10px; /* Space between the input and the send button */
+    }
+
+    #input-text-portrait {
+	width: 100%; /* The input takes the full width of its container */
+    }
+    #send-button {
+	width: 100%; /* Make the button only as wide as its content */
+	box-sizing: border-box; /* Includes padding and border in the button's total width */
+	/* Add any additional styles for the send button here */
+    }
+}
+
+#send-button {
+    width: 100%; /* Make the button only as wide as its content */
+    /* Add any additional styles for the send button here */
+}
+
+
+/* Additional global styles and resets (if needed) */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Popup - initially hidden */
+#popup {
+    display: none; /* Hidden until Menu is clicked */
+    position: absolute;
+    flex-direction: column;
+    align-items: center; /* Align children */
+    justify-content: center; /* Center children */
+    width: 80%; /* Adjust width as needed */
+    height: auto; /* Adjust height as needed */
+    top: 15%; /* Position as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #997950; 
+}

@@ -8,7 +8,6 @@ script=$(readlink -f "$0")
 # Absolute path this script is in
 abs_path=$(dirname "$script")
 
-
 # .id data
 read -p "Enter the number of the box this is in the alpha batch (e.g. 01):" box_number
 read -p "Enter the hardware number of the box (e.g. 00456):" hardware_number
@@ -42,9 +41,11 @@ npm install net
 npm install socketio
 npm install socket.io
 
-# install necessary packages for launcher.py
+# install necessary python packages
 apt install -y python3-pip
-pip3 install pygame
+pip3 install pynput
+pip3 install python-uinput
+pip3 install cffi
 
 # get rid of the window manager
 apt remove -y gdm3
@@ -53,6 +54,12 @@ systemctl disable lightdm.service
 
 # install tools
 apt install -y curl git
+apt install -y qrencode 
+apt install -y xdotool
+apt install -y tmux
+
+# set permissions on /dev/uinput
+chmod 666 /dev/uinput
 
 # set github as known host
 ssh-keyscan github.com > $base/.ssh/known_hosts
@@ -69,6 +76,9 @@ if ! [ -d "$base/rqnio" ]; then
     chgrp requin $base/rqnio
     chown requin $base/rqnio
 fi
+
+# make audio work
+echo 'options snd-hda-intel dmic_detect=0' > /etc/modprobe.d/alsa-base.conf
 
 # have rqn software run on startup
 apt install -y mingetty
