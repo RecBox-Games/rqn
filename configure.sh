@@ -16,8 +16,10 @@ echo "Checking node modules"
 
 # npm install if we need to
 if [[ ! -d "$rqn/webcp/node_modules" ]]; then
-    echo "Installing node modules"
     cd $rqn/webcp
+    echo "Cleaning npm cache"
+    npm cache clean --force    
+    echo "Installing node modules"    
     npm install
 fi
 
