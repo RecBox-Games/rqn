@@ -7,18 +7,14 @@ dest="$base/rqn"
 script=$(readlink -f "$0")
 # Absolute path this script is in
 abs_path=$(dirname "$script")
-alsa_base_file="/etc/modprobe.d/alsa-base.conf"
-alsa_options_dmic="options snd-hda-intel dmic_detect=0"
-
-
 
 # .id data
-read -p "Enter the number of the box this is in the alpha batch (e.g. 01):" box_number
+read -p "Enter the number of the box this is in the cube batch (e.g. 201):" box_number
 read -p "Enter the hardware number of the box (e.g. 00456):" hardware_number
-read -p "Enter the Pokemon (pokemon.com/us/pokedex should match hardware number):" pokemon
+read -p "Enter a mnemonic for the box (from pinfruit.com):" mnemonic
 echo -e "$box_number\n" > $base/.id
 echo -e "$hardware_number\n" >> $base/.id
-echo -e "$pokemon\n" >> $base/.id
+echo -e "$mnemonic\n" >> $base/.id
 
 # lost permissions
 chmod +x $dest/cp_server
@@ -29,11 +25,7 @@ chmod +x $dest/rqn-start.sh
 # add requin to sudoers no password
 echo "requin ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-# save local ip address into a file
-ip addr | grep 192.168 | sed 's/^[^0-9]*\([0-9\.]*\).*/\1/' > $dest/localip
-
-# change our package sources to a source that actually has standard packages
-cp $dest/debian11_sources.list /etc/apt/sources.list
+# update the list of latest packages
 apt update
 
 #install node and web server packages
@@ -56,12 +48,13 @@ apt remove -y gdm3
 apt install -y lightdm
 systemctl disable lightdm.service
 
-# install tools
+# install utilities
 apt install -y curl git
-apt install -y qrencode
+apt install -y qrencode 
+apt install -y xdotool
 
-# set permissions on /dev/uinput
-chmod 666 /dev/uinput
+# install dev tools
+apt install -y tmux emacs
 
 # set github as known host
 ssh-keyscan github.com > $base/.ssh/known_hosts
@@ -79,18 +72,8 @@ if ! [ -d "$base/rqnio" ]; then
     chown requin $base/rqnio
 fi
 
-# set audio if necessary
-if [[ ! -f "$alsa_base_file" ]]; then
-    # File does not exist, create it and add the line
-    sudo bash -c "echo '$alsa_options_dmic' > '$alsa_base_file'"
-    echo "File did not exist - created and added the line."
-    /sbin/reboot
-elif ! grep -qFx -- "$alsa_options_dmic" "$alsa_base_file"; then
-    # File exists but does not contain the line, add the line
-    sudo bash -c "echo '$alsa_options_dmic' >> '$alsa_base_file'"
-    echo "File existed but line was not found - added the line."
-fi
-
+# make audio work
+echo 'options snd-hda-intel dmic_detect=0' > /etc/modprobe.d/alsa-base.conf
 
 # have rqn software run on startup
 apt install -y mingetty
