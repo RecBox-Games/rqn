@@ -54,12 +54,12 @@ systemctl disable lightdm.service
 
 # install tools
 apt install -y curl git
-apt install -y qrencode
+apt install -y qrencode 
+apt install -y xdotool
+apt install -y tmux
 
 # set permissions on /dev/uinput
-set +e
 chmod 666 /dev/uinput
-set -e
 
 # set github as known host
 ssh-keyscan github.com > $base/.ssh/known_hosts
