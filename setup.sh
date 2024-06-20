@@ -9,12 +9,12 @@ script=$(readlink -f "$0")
 abs_path=$(dirname "$script")
 
 # .id data
-read -p "Enter the number of the box this is in the cube batch (e.g. 201):" box_number
+read -p "Enter the number of the box this is in the alpha batch (e.g. 01):" box_number
 read -p "Enter the hardware number of the box (e.g. 00456):" hardware_number
-read -p "Enter a mnemonic for the box (from pinfruit.com):" mnemonic
+read -p "Enter the Pokemon (pokemon.com/us/pokedex should match hardware number):" pokemon
 echo -e "$box_number\n" > $base/.id
 echo -e "$hardware_number\n" >> $base/.id
-echo -e "$mnemonic\n" >> $base/.id
+echo -e "$pokemon\n" >> $base/.id
 
 # lost permissions
 chmod +x $dest/cp_server
@@ -25,7 +25,11 @@ chmod +x $dest/rqn-start.sh
 # add requin to sudoers no password
 echo "requin ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-# update the list of latest packages
+# save local ip address into a file
+ip addr | grep 192.168 | sed 's/^[^0-9]*\([0-9\.]*\).*/\1/' > $dest/localip
+
+# change our package sources to a source that actually has standard packages
+cp $dest/debian11_sources.list /etc/apt/sources.list
 apt update
 
 #install node and web server packages
@@ -48,13 +52,14 @@ apt remove -y gdm3
 apt install -y lightdm
 systemctl disable lightdm.service
 
-# install utilities
+# install tools
 apt install -y curl git
 apt install -y qrencode 
 apt install -y xdotool
+apt install -y tmux
 
-# install dev tools
-apt install -y tmux emacs
+# set permissions on /dev/uinput
+chmod 666 /dev/uinput
 
 # set github as known host
 ssh-keyscan github.com > $base/.ssh/known_hosts
