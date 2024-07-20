@@ -25,14 +25,11 @@ chmod +x $dest/rqn-start.sh
 # add requin to sudoers no password
 echo "requin ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-# save local ip address into a file
-ip addr | grep 192.168 | sed 's/^[^0-9]*\([0-9\.]*\).*/\1/' > $dest/localip
-
-# change our package sources to a source that actually has standard packages
+# change package sources (debian only; will break ubuntu)
 cp $dest/debian11_sources.list /etc/apt/sources.list
 apt update
 
-#install node and web server packages
+# install node and web server packages
 apt install -y nodejs
 apt install -y npm
 cd $dest/webcp
@@ -47,19 +44,15 @@ pip3 install pynput
 pip3 install python-uinput
 pip3 install cffi
 
-# get rid of the window manager
-apt remove -y gdm3
-apt install -y lightdm
-systemctl disable lightdm.service
-
-# install tools
+# install GameNite utilities
 apt install -y curl git
 apt install -y qrencode 
 apt install -y xdotool
-apt install -y tmux
 
-# set permissions on /dev/uinput
-chmod 666 /dev/uinput
+# install convenience tools
+apt install -y emacs
+apt install -y tmux
+apt install -y net-tools
 
 # set github as known host
 ssh-keyscan github.com > $base/.ssh/known_hosts
@@ -77,9 +70,6 @@ if ! [ -d "$base/rqnio" ]; then
     chown requin $base/rqnio
 fi
 
-# make audio work
-echo 'options snd-hda-intel dmic_detect=0' > /etc/modprobe.d/alsa-base.conf
-
 # have rqn software run on startup
 apt install -y mingetty
 if ! [ -d "/etc/systemd/system/getty@tty1.service.d" ]; then
@@ -89,9 +79,6 @@ cp $dest/override.conf /etc/systemd/system/getty@tty1.service.d/
 systemctl enable getty@tty1.service
 cp $dest/.xinitrc $base/
 cp $dest/.bashrc $base/
-# setup boot splash screen
-
-source  $abs_path/splash_setup.sh
 
 # done with setup
 echo "Done."
