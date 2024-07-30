@@ -44,6 +44,11 @@ pip3 install pynput
 pip3 install python-uinput
 pip3 install cffi
 
+# get rid of the window manager
+apt remove -y gdm3
+apt install -y lightdm
+systemctl disable lightdm.service
+
 # install GameNite utilities
 apt install -y curl git
 apt install -y qrencode 
@@ -69,6 +74,9 @@ if ! [ -d "$base/rqnio" ]; then
     chgrp requin $base/rqnio
     chown requin $base/rqnio
 fi
+
+# make audio work
+echo 'options snd-hda-intel dmic_detect=0' > /etc/modprobe.d/alsa-base.conf
 
 # have rqn software run on startup
 apt install -y mingetty
