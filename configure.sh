@@ -14,6 +14,12 @@ sshdir="$base/.ssh"
 
 echo "Checking node modules"
 
+
+# backwards compatibility for /home/requin/ipc games
+mkdir /dev/shm/rqnio
+rm -rf /home/requin/ipc
+ln -s /dev/shm/rqnio /home/requin/ipc
+
 # npm install if we need to
 if [[ ! -d "$rqn/webcp/node_modules" ]]; then
     cd $rqn/webcp
