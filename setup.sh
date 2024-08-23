@@ -53,6 +53,8 @@ systemctl disable lightdm.service
 apt install -y curl git
 apt install -y qrencode 
 apt install -y xdotool
+apt install -y acpid
+apt install -y pqiv wmctrl
 
 # install convenience tools
 apt install -y emacs
@@ -87,6 +89,9 @@ cp $dest/override.conf /etc/systemd/system/getty@tty1.service.d/
 systemctl enable getty@tty1.service
 cp $dest/.xinitrc $base/
 cp $dest/.bashrc $base/
+
+# other configuration (power button override)
+$dest/configure.sh
 
 # done with setup
 echo "Done."

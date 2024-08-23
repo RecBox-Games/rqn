@@ -1,0 +1,2 @@
+event=button/power.*LNXPWRBN
+action=/etc/acpi/powerbtn_handler.sh > /home/requin/logs/powerbtn.out

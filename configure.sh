@@ -64,4 +64,18 @@ if [[ -z "$(cat $sshdir/known_hosts | grep qcYjThFg)" ]]; then
     cat $sshdir/known_hosts
 fi
 
+
+# power button override
+if [[ ! -f /etc/acpi/events/powerbtn_override ]]; then
+    echo "enabling acpid"
+    sudo systemctl enable acpid
+    echo "copying power button override scripts and config"
+    cp $rqn/login.conf /etc/systemd/
+    cp $rqn/powerbtn_override /etc/acpi/events/
+    cp $rqn/powerbtn_handler.sh /etc/acpi/
+    cp $rqn/toggle_ip_qr.ip $base/
+    echo "restarting acpid"
+    sudo systemctl restart acpid
+fi
+
 echo "Done configuring"
