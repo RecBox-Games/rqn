@@ -73,7 +73,7 @@ if [[ ! -f /etc/acpi/events/powerbtn_override ]]; then
     sudo cp $rqn/login.conf /etc/systemd/
     sudo cp $rqn/powerbtn_override /etc/acpi/events/
     sudo cp $rqn/powerbtn_handler.sh /etc/acpi/
-    sudo cp $rqn/toggle_ip_qr.ip $base/
+    cp $rqn/toggle_ip_qr.sh $base/
     echo "restarting acpid"
     sudo systemctl restart acpid
 fi
